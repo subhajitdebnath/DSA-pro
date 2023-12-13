@@ -15,8 +15,10 @@
 
 
         <main>
-            <input type="text" id="searchInput" placeholder="Search">
-            <div id="suggestionArea"></div>
+            <div class="container">
+                <input type="text" id="searchInput" placeholder="Search">
+                <div id="suggestionArea"></div>
+            </div>
         </main>
     </body>
 
@@ -28,7 +30,12 @@
             const suggestionArea = document.getElementById('suggestionArea');
 
             // focus on/off search
-            input.addEventListener('focus', () => {
+            input.addEventListener('focus', (e) => {
+                const searchStr = e.target.value;
+                if(!searchStr) {
+                    suggestionArea.style.display = 'none';
+                    return;
+                }
                 // console.log('focus')
                 suggestionArea.style.display = 'block';
             });
@@ -68,6 +75,7 @@
                         });
 
                         suggestionArea.appendChild(list);
+                        suggestionArea.style.display = 'block';
                     }
                 } catch(e) {
                     console.log(e);

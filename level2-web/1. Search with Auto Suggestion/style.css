@@ -1,18 +1,18 @@
-main {
+.container {
     width: 500px;
-    margin: 1px auto 0 auto;
-    /* background-color: rgb(255, 247, 237); */
+    margin: auto;
 }
 
 #searchInput {
-    padding: 10px;
     width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 #suggestionArea {
     border: 1px solid red;
-    margin-top: 10px;
-    min-height: 100px;
-    padding: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
     display: none;
 }
