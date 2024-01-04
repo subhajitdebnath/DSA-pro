@@ -1,0 +1,80 @@
+<!-- Question Detail: https://docs.google.com/document/d/14dwfc0C72dh-PO9keZt40E4dDijyRbKsbmFmnmUzb7M/edit
+API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
+<html>
+    <head>
+        <title>Whatsapp Web - Flipkart Machine Coding Question</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="left-container">
+                <div class="header-container">
+                    <h2>Filter By Title / Order Id</h2>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="product-container" id="product-container"></div>
+            </div>
+            <div class="chat-container">
+                test
+            </div>
+        </div>
+
+        <script>
+            (function() {
+                
+                const populateOrders = async() => {
+                    const res = await fetch('https://my-json-server.typicode.com/codebuds-fk/chat/chats');
+                    const orders = await res.json();
+                    console.log(orders);
+                    const productContainer = document.getElementById('product-container');
+
+                    orders.forEach(order => {
+                        const prodName = document.createElement('div');
+                        prodName.innerText = order.title;
+                        prodName.classList.add('product-name');
+
+                        const orderNo = document.createElement('div');
+                        orderNo.innerText = order.orderId;
+                        orderNo.classList.add('order-number');
+
+                        const orderDetail = document.createElement('div');
+                        orderDetail.innerText = 'test detail';
+                        orderDetail.classList.add('order-detail');
+
+                        const productItemDetail = document.createElement('div');
+                        productItemDetail.classList.add('order-detail');
+                        productItemDetail.appendChild(prodName);
+                        productItemDetail.appendChild(orderNo);
+                        productItemDetail.appendChild(orderDetail);
+
+                        const prodImg = document.createElement('div');
+                        prodImg.style.height = '4rem';
+                        prodImg.style.width = '4rem';
+                        prodImg.style.backgroundImage = "url('"+order.imageURL+"')";
+                        prodImg.style.backgroundRepeat = 'no-repeat';
+                        prodImg.style.backgroundPosition = 'center center';
+                        prodImg.style.backgroundSize = 'contain';
+                        prodImg.classList.add('product-image');
+
+                        const orderDate = document.createElement('div');
+                        orderDate.innerText = new Date(order.latestMessageTimestamp);
+                        orderDate.classList.add('order-date');
+
+                        const productItem = document.createElement('div');
+                        productItem.classList.add('product-item');
+
+                        
+                        productItem.appendChild(prodImg);
+                        productItem.appendChild(productItemDetail);
+                        productItem.appendChild(orderDate);
+
+                        productContainer.appendChild(productItem);
+                    });
+                }
+
+                populateOrders();
+
+            }());
+        </script>
+    </body>
+</html>

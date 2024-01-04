@@ -1,0 +1,31 @@
+.main-container {
+    display: flex;
+}
+
+.left-container {
+    width: 100%;
+}
+
+.product-item {
+    display: flex;
+    border-bottom: 1px solid #cfcfcf;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.active {
+    background-color: #dedede;
+}
+
+.product-image {
+    width: 4rem;
+}
+
+.order-date {
+    margin-left: auto;
+}
+
+.chat-container {
+    height: 50rem;
+    background-color: red;
+}
