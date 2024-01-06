@@ -7,25 +7,32 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
     </head>
     <body>
         <div class="main-container">
-            <div class="left-container">
+            <div class="left-container" id="order-list">
                 <div class="header-container">
                     <h2>Filter By Title / Order Id</h2>
                     <input type="text" placeholder="Search">
                 </div>
                 <div class="product-container" id="product-container"></div>
             </div>
-            <div class="chat-container">
-                test
+            <div class="chat-container" id="chat-container">
+                <div class="chat-header">
+                    <div class="chat-header-image"></div>
+                    <div class="chat-header-title">test title</div>
+                    <div class="chat-header-close" id="chat-header-close">X</div>
+                </div>
             </div>
         </div>
 
         <script>
             (function() {
+
+                let resp = [];
                 
                 const populateOrders = async() => {
                     const res = await fetch('https://my-json-server.typicode.com/codebuds-fk/chat/chats');
                     const orders = await res.json();
                     console.log(orders);
+                    resp = orders;
                     const productContainer = document.getElementById('product-container');
 
                     orders.forEach(order => {
@@ -48,12 +55,7 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
                         productItemDetail.appendChild(orderDetail);
 
                         const prodImg = document.createElement('div');
-                        prodImg.style.height = '4rem';
-                        prodImg.style.width = '4rem';
                         prodImg.style.backgroundImage = "url('"+order.imageURL+"')";
-                        prodImg.style.backgroundRepeat = 'no-repeat';
-                        prodImg.style.backgroundPosition = 'center center';
-                        prodImg.style.backgroundSize = 'contain';
                         prodImg.classList.add('product-image');
 
                         const orderDate = document.createElement('div');
@@ -62,7 +64,10 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
 
                         const productItem = document.createElement('div');
                         productItem.classList.add('product-item');
-
+                        productItem.setAttribute('data-id', order.id);
+                        
+                        // listeing to the order click event
+                        handleClick(productItem);
                         
                         productItem.appendChild(prodImg);
                         productItem.appendChild(productItemDetail);
@@ -73,6 +78,27 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
                 }
 
                 populateOrders();
+
+                const handleClick = (productItem) => {
+                    productItem.addEventListener('click', (e) => {
+                        const target = e.target.closest('.product-item');
+                        const selectedProd = getProductDetail(target.dataset.id);
+                        if(selectedProd) {
+                            document.getElementById('order-list').classList.add('enable');
+                            document.getElementById('chat-container').style.display = 'block';
+                        }
+
+                    }, true);
+                }
+
+                const getProductDetail = (id) => {
+                    return resp.find(item => item.id === +id);
+                }
+
+                document.getElementById('chat-header-close').addEventListener('click', () => {
+                    document.getElementById('order-list').classList.remove('enable');
+                    document.getElementById('chat-container').style.display = 'none';
+                });
 
             }());
         </script>
