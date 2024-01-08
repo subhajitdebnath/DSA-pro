@@ -41,3 +41,39 @@
     /* height: 50rem;
     background-color: red; */
 }
+
+.chat-header {
+    display: flex;
+    align-items: center;
+}
+
+.chat-header-image {
+    background-image: url("https://rukminim1.flixcart.com/image/300/300/k0vbgy80pkrrdj/speaker/mobile-tablet-speaker/4/n/n/boat-stone-grenade-original-imafg96ffpnpgdv4.jpeg?q=90");
+    width: 4rem;
+    height: 4rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+.chat-header-close {
+    margin-left: auto;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.msg-container {
+    height: 83vh;
+    overflow: auto;
+}
+
+.msg-container.blank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-msg {
+    width: 100%;
+    height: 2.5rem;
+}
