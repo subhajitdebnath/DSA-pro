@@ -58,7 +58,7 @@ body {
 }
 
 .chat-header-image {
-    background-image: url("https://rukminim1.flixcart.com/image/300/300/k0vbgy80pkrrdj/speaker/mobile-tablet-speaker/4/n/n/boat-stone-grenade-original-imafg96ffpnpgdv4.jpeg?q=90");
+    /* background-image: url("https://rukminim1.flixcart.com/image/300/300/k0vbgy80pkrrdj/speaker/mobile-tablet-speaker/4/n/n/boat-stone-grenade-original-imafg96ffpnpgdv4.jpeg?q=90"); */
     width: 4rem;
     height: 4rem;
     background-repeat: no-repeat;
@@ -73,6 +73,9 @@ body {
 }
 
 .msg-container {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
     height: 83vh;
     overflow: auto;
     background-color: #f1f3f6;

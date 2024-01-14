@@ -17,68 +17,14 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
             </div>
             <div class="chat-container" id="chat-container">
                 <div class="chat-header">
-                    <div class="chat-header-image"></div>
-                    <div class="chat-header-title"><h2>Test order</h2></div>
+                    <div class="chat-header-image" id="chat-header-image"></div>
+                    <div class="chat-header-title"><h2 id="chat-header-title">Test order</h2></div>
                     <div class="chat-header-close" id="chat-header-close">X</div>
                 </div>
                 <div class="msg-container blank d-none">
                     send a msg to start chatting
                 </div>
-                <div class="msg-container">
-                    <div class="chat-text user-chat">
-                        The chat list loads with a list of chats as fetched from the api source
-                    </div>
-                    <div class="chat-text user-chat">
-                        Clicking on a chat list opens the respective chat with the messages for that particular chat
-                    </div>
-                    <div class="chat-text system-chat">
-                        Each chat list item shows basic chat information about that chat like Product Image, Chat Title, Order ID, Date in DD/MM/YYYY format of the last message
-                    </div>
-                    <div class="chat-text user-chat">
-                        The chat list loads with a list of chats as fetched from the api source
-                    </div>
-                    <div class="chat-text user-chat">
-                        Clicking on a chat list opens the respective chat with the messages for that particular chat
-                    </div>
-                    <div class="chat-text system-chat">
-                        Each chat list item shows basic chat information about that chat like Product Image, Chat Title, Order ID, Date in DD/MM/YYYY format of the last message
-                    </div>
-                    <div class="chat-text user-chat">
-                        The chat list loads with a list of chats as fetched from the api source
-                    </div>
-                    <div class="chat-text user-chat">
-                        Clicking on a chat list opens the respective chat with the messages for that particular chat
-                    </div>
-                    <div class="chat-text system-chat">
-                        Each chat list item shows basic chat information about that chat like Product Image, Chat Title, Order ID, Date in DD/MM/YYYY format of the last message
-                    </div>
-                    <div class="chat-text user-chat">
-                        The chat list loads with a list of chats as fetched from the api source
-                    </div>
-                    <div class="chat-text user-chat">
-                        Clicking on a chat list opens the respective chat with the messages for that particular chat
-                    </div>
-                    <div class="chat-text system-chat">
-                        Each chat list item shows basic chat information about that chat like Product Image, Chat Title, Order ID, Date in DD/MM/YYYY format of the last message
-                    </div>
-                    <div class="chat-text user-chat">
-                        The chat list loads with a list of chats as fetched from the api source
-                    </div>
-                    <div class="chat-text user-chat">
-                        Clicking on a chat list opens the respective chat with the messages for that particular chat
-                    </div>
-                    <div class="chat-text system-chat">
-                        Each chat list item shows basic chat information about that chat like Product Image, Chat Title, Order ID, Date in DD/MM/YYYY format of the last message
-                    </div>
-                    <div class="chat-text user-chat">
-                        The chat list loads with a list of chats as fetched from the api source
-                    </div>
-                    <div class="chat-text user-chat">
-                        Clicking on a chat list opens the respective chat with the messages for that particular chat
-                    </div>
-                    <div class="chat-text system-chat">
-                        Each chat list item shows basic chat information about that chat like Product Image, Chat Title, Order ID, Date in DD/MM/YYYY format of the last message
-                    </div>
+                <div class="msg-container" id="msg-container">
                 </div>
                 <input class="input-msg" type="text" placeholder="Type a message...">
             </div>
@@ -88,6 +34,7 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
             (function() {
 
                 let resp = [];
+                const msgContainer = document.getElementById('msg-container');
                 
                 const populateOrders = async() => {
                     const res = await fetch('https://my-json-server.typicode.com/codebuds-fk/chat/chats');
@@ -147,6 +94,7 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
                         if(selectedProd) {
                             document.getElementById('order-list').classList.add('enable');
                             document.getElementById('chat-container').style.display = 'block';
+                            createOrderDetail(selectedProd);
                         }
 
                     }, true);
@@ -154,6 +102,27 @@ API Response: https://my-json-server.typicode.com/codebuds-fk/chat/chats -->
 
                 const getProductDetail = (id) => {
                     return resp.find(item => item.id === +id);
+                }
+
+                const createOrderDetail = (order) => {
+                    console.log(order);
+
+                    /** Adding chat details */
+                    document.getElementById('chat-header-image').style.backgroundImage = "url('"+order.imageURL+"')";
+                    document.getElementById('chat-header-title').innerText = order.title;
+                    msgContainer.innerHTML = '';
+                    order.messageList.forEach(chat => {
+                        const chatItem = document.createElement('div');
+                        chatItem.innerText = chat.message;
+                        chatItem.classList.add('chat-text');
+
+                        if(chat.sender === 'USER') {
+                            chatItem.classList.add('user-chat');
+                        } else if(chat.sender === 'BOT') {
+                            chatItem.classList.add('system-chat');
+                        }
+                        msgContainer.appendChild(chatItem);
+                    });
                 }
 
                 document.getElementById('chat-header-close').addEventListener('click', () => {
